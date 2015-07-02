@@ -5,11 +5,11 @@
   "scripts": {
     "start": "node ./bin/www"
   },
-  "engines":{
+  "engines": {
     "node": "0.10.38",
     "npm": "1.4.28"
   },
-  "devDependencies":{
+  "devDependencies": {
     "sqlite3": "^3.0.4"
   },
   "dependencies": {
@@ -19,6 +19,7 @@
     "ejs": "~2.3.1",
     "express": "~4.12.4",
     "express-partials": "^0.3.0",
+    "method-override": "^2.3.3",
     "morgan": "~1.5.3",
     "pg": "~4.4.0",
     "pg-hstore": "~2.3.2",
