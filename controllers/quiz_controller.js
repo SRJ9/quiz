@@ -48,10 +48,12 @@ exports.answer = function(req, res){
 
 exports.new = function(req, res){
 	var quiz = models.Quiz.build(
-		{pregunta: "Pregunta", respuesta: "Respuesta"}
+		{pregunta: "Pregunta", respuesta: "Respuesta", tema: ""}
 	);
 
-	res.render('quizes/new', {quiz: quiz, errors: []});
+	var temas = get_temas();
+
+	res.render('quizes/new', {quiz: quiz, errors: [], temas: temas});
 }
 
 exports.create = function(req, res){
@@ -63,7 +65,7 @@ exports.create = function(req, res){
 				quiz: quiz, errors: err.errors
 			})
 		} else {
-			quiz.save({fields: ["pregunta", "respuesta"]})
+			quiz.save({fields: ["pregunta", "respuesta", "tema"]})
 			.then(function(){
 				res.redirect('/quizes');		
 			})
@@ -74,6 +76,7 @@ exports.create = function(req, res){
 exports.update = function(req, res){
 	req.quiz.pregunta = req.body.quiz.pregunta;
 	req.quiz.respuesta = req.body.quiz.respuesta;
+	req.quiz.tema = req.body.quiz.tema;
 
 	req.quiz.validate().then(function(err){
 		if(err){
@@ -81,7 +84,7 @@ exports.update = function(req, res){
 				quiz: req.quiz, errors: err.errors
 			})
 		} else {
-			req.quiz.save({fields: ["pregunta", "respuesta"]})
+			req.quiz.save({fields: ["pregunta", "respuesta", "tema"]})
 			.then(function(){
 				res.redirect('/quizes');		
 			})
@@ -91,8 +94,8 @@ exports.update = function(req, res){
 
 exports.edit = function(req, res){
 	var quiz = req.quiz;
-
-	res.render('quizes/edit', {quiz: quiz, errors: []});
+	var temas = get_temas();
+	res.render('quizes/edit', {quiz: quiz, errors: [], temas: temas});
 }
 
 exports.delete = function(req, res){
@@ -105,4 +108,15 @@ exports.delete = function(req, res){
 
 exports.author = function(req, res){
 	res.render('quizes/author', {nombre: 'José', apellidos: 'Escobar Ramírez', foto: '/images/profile.png'})
+}
+
+function get_temas(){
+	return [
+
+		{value: 'otro', text:'Otro'},
+		{value: 'humanidades', text:'Humanidades'},
+		{value: 'ocio', text:'Ocio'},
+		{value: 'ciencia', text:'Ciencia'},
+		{value: 'tecnologia', text:'Tecnología'}
+	]
 }
