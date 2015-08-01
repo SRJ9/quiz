@@ -1,7 +1,10 @@
 var models = require('../models/models.js');
 
 exports.load = function(req, res, next, quizId){
-	models.Quiz.findById(quizId).then(
+	models.Quiz.find({
+		where: { id: Number(quizId) },
+			include: [{model: models.Comment}]
+		}).then(
 		function(quiz){
 			if(quiz){
 				req.quiz = quiz;
@@ -59,10 +62,11 @@ exports.new = function(req, res){
 exports.create = function(req, res){
 	var quiz = models.Quiz.build(req.body.quiz);
 
+	var temas = get_temas();
 	quiz.validate().then(function(err){
 		if(err){
 			res.render('quizes/new', {
-				quiz: quiz, errors: err.errors
+				quiz: quiz, errors: err.errors, temas: temas
 			})
 		} else {
 			quiz.save({fields: ["pregunta", "respuesta", "tema"]})
@@ -78,10 +82,12 @@ exports.update = function(req, res){
 	req.quiz.respuesta = req.body.quiz.respuesta;
 	req.quiz.tema = req.body.quiz.tema;
 
-	req.quiz.validate().then(function(err){
+	var temas = get_temas();
+
+	req.q1uiz.validate().then(function(err){
 		if(err){
-			res.render('/quizes/edit', {
-				quiz: req.quiz, errors: err.errors
+			res.render('quizes/edit', {
+				quiz: req.quiz, errors: err.errors, temas: temas
 			})
 		} else {
 			req.quiz.save({fields: ["pregunta", "respuesta", "tema"]})
