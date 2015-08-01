@@ -27,6 +27,23 @@ app.use(session());
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(function(req, res, next) {
+  var two_minutes = 2*60*1000;
+    if (req.session.user) {
+    if (!req.session.timestamp) {
+      req.session.timestamp = new Date().getTime();
+    } else {
+      if ((new Date().getTime() - req.session.timestamp) > two_minutes) {
+        delete req.session.user;
+        delete req.session.timestamp;
+      } else {
+        req.session.timestamp = new Date().getTime();
+      }
+    }
+  }
+  next();
+});
+
 app.use(function(req,res,next){
   if(!req.path.match(/\/login|\/logout/)){
     req.session.redir = req.path;
