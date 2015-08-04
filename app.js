@@ -36,6 +36,7 @@ app.use(function(req, res, next) {
       if ((new Date().getTime() - req.session.timestamp) > two_minutes) {
         delete req.session.user;
         delete req.session.timestamp;
+        res.redirect('/login');
       } else {
         req.session.timestamp = new Date().getTime();
       }
