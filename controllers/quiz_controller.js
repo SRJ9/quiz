@@ -113,7 +113,7 @@ exports.delete = function(req, res){
 }
 
 exports.author = function(req, res){
-	res.render('quizes/author', {nombre: 'José', apellidos: 'Escobar Ramírez', foto: '/images/profile.png'})
+	res.render('quizes/author', {nombre: 'José', apellidos: 'Escobar Ramírez', foto: '/images/profile.png', errors: []})
 }
 
 function get_temas(){
