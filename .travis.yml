@@ -6,7 +6,7 @@ node_js:
   - "4.2"
   - "4.1"
   - "4.0"
-install:
+before_install:
   - npm install -g codecov
-script:
+after_success:
   - codecov
