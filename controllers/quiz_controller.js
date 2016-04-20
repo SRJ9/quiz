@@ -21,9 +21,9 @@ exports.index = function(req, res){
 	var where_obj = {};
 	var search_org = '';
 	if(req.query.search){
-		var search_org = req.query.search;
+		search_org = req.query.search;
 		var search = '%' + search_org.replace(/ /g, '%') + '%';
-		var where_obj = {where: ["pregunta like ?", search]};
+		where_obj = {where: ["pregunta like ?", search]};
 
 	}
 	models.Quiz.findAll(where_obj).then(function(quizes){
