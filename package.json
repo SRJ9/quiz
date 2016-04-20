@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
+    "test": "istanbul cover node_modules/mocha/bin/_mocha && codecov"
   },
   "bin": {
     "codecov": "./node_modules/codecov/bin/codecov"
