@@ -3,5 +3,3 @@ sudo: false
 node_js:
   - "0.10"
 
-after_success:
-  - ./bin/codecov -e TRAVIS_NODE_VERSION
